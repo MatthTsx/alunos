@@ -14,8 +14,8 @@ import utils.Pair;
 public class GradeInfo extends JPanel{
     Grade a;
 
-    public int getAvg(){
-        int resp = 0;
+    public float getAvg(){
+        float resp = 0;
         int qntd = 0;
         for (Aluno al : a.alunos) {
             for (Pair p : al.notas) {
