@@ -15,10 +15,10 @@ public class Footer extends JPanel{
     public int index;
     public int max;
     public Screen s;
-    public Boolean isAlunos;
+    public int isAlunos;
     public Button.Action a;
 
-    public Footer(int i, int max, JPanel parent, Screen s, Boolean isAlunos,
+    public Footer(int i, int max, JPanel parent, Screen s, int isAlunos,
     Button.Action act){
         this.index = i;
         this.max = max;
@@ -33,7 +33,7 @@ public class Footer extends JPanel{
     }
 
     public void re(){
-        int max = isAlunos? s.alunos.size() : s.grades.size();
+        int max = isAlunos == -1? s.alunos.size() : isAlunos == -2? s.grades.size() : s.alunos.get(isAlunos).notas.size();
         this.max = max;
     }
 

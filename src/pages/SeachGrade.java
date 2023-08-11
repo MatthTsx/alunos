@@ -21,7 +21,7 @@ public class SeachGrade extends Page{
     public SeachGrade(Screen scrn){
         super(scrn);
         footer = new Footer(0, (int) Math.floor( _scrn.grades.size() / this.PorPage),
-            this, _scrn, false, () -> {
+            this, _scrn, -1, () -> {
             this.Change();
         });
         this.add(footer, BorderLayout.SOUTH);

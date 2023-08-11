@@ -8,7 +8,7 @@ public class Aluno {
     public String codigo;
     public String name;
     public Grade g;
-    public ArrayList<Pair> notas;
+    public ArrayList<Pair> notas = new ArrayList<>();
     // 1: codigo
     // 2: name
     // 3: GradeCodigo

@@ -16,6 +16,7 @@ public class Screen extends JFrame{
     private Container c;
     public ArrayList<Grade> grades = new ArrayList<>();
     public ArrayList<Aluno> alunos = new ArrayList<>();
+    public int index = 0;
 
     public Screen(String name, int index){
         this.name = name;
@@ -40,6 +41,7 @@ public class Screen extends JFrame{
         pages.add(new SearchAluno(this));
         pages.add(new AddGrade(this));
         pages.add(new SeachGrade(this));
+        pages.add(new AlunoChange(this));
     }
 
     private void init(){

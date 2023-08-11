@@ -21,7 +21,7 @@ public class SearchAluno extends Page{
     public SearchAluno(Screen scrn){
         super(scrn);
         footer = new Footer(0, (int) Math.floor( _scrn.alunos.size() / this.PorPage),
-            this, _scrn, true, () -> {
+            this, _scrn, -2, () -> {
             this.Change();
         });
         this.add(footer, BorderLayout.SOUTH);
@@ -31,9 +31,9 @@ public class SearchAluno extends Page{
 
     public void addComps(){
         this.c.removeAll();
-        for (int i = 0 + footer.index*PorPage; i < Math.min(_scrn.alunos.size(), footer.index*PorPage + PorPage); i++) {
+        for (int i = footer.index*PorPage; i < Math.min(_scrn.alunos.size(), footer.index*PorPage + PorPage); i++) {
             Aluno al = _scrn.alunos.get(i);
-            c.add(new alunoInfo(al, i % 2 == 0 ? Color.gray : Color.LIGHT_GRAY));
+            c.add(new alunoInfo(al, i % 2 == 0 ? Color.gray : Color.LIGHT_GRAY, this, i));
         }
         this.c.revalidate();
         this.c.repaint();
