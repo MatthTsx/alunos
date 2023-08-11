@@ -21,7 +21,7 @@ import types.Screen;
 import utils.Aluno;
 import utils.Pair;
 
-public class AlunoChange extends Page {
+public class AlunoChange extends Page { //go horse
     public int index = -1;
     private int PageIndex = 0;
     private int PorPage = 15;
@@ -82,8 +82,9 @@ public class AlunoChange extends Page {
         t.getDocument().addDocumentListener(new TextLis(a,0));
         
         top.add(t);
+        float avg = this.getAvg(al.notas);
         textinhoLa.setText(
-            "Media geral: " + this.getAvg(al.notas)
+            "Media geral: " + avg + "              " + (avg < 5 ? "Reprovado" : "Aprovado")
         );
         top.add(textinhoLa);
             
@@ -94,9 +95,9 @@ public class AlunoChange extends Page {
             _scrn,
             index,
             () -> {
-                this.PageIndex ++;
-                this.footer.Reload();
+                this.footer.max = al.notas.size() / PorPage;
                 this.re();
+                this.footer.Reload();
             }
         );
         
@@ -104,6 +105,8 @@ public class AlunoChange extends Page {
             this._scrn.alunos.set(index, al);
             this.re();
         });
+        reload.setText("Update");
+
         JPanel bottom = new JPanel(new GridLayout(2,1));
         bottom.add(reload);
         bottom.add(footer);
@@ -121,16 +124,16 @@ public class AlunoChange extends Page {
         Infos.setLayout(new GridLayout(PorPage + 1, 1));
         for (int i = PorPage * footer.index; i < Math.min(footer.index*PorPage + PorPage, al.notas.size()); i++) {
             Pair not = al.notas.get(i);
-            JPanel pp = new JPanel(new GridLayout(1,3));
+            JPanel pp = new JPanel(new GridLayout(1,4));
             pp.add(new JLabel(not.o1.toString()));
             pp.add(new JLabel(not.o2.toString()));
             JTextField _t = new JTextField(al.name);
             _t.setPreferredSize(new Dimension(250, 30));
-            _t.setText(al.name);
+            _t.setText(not.o2.toString());
             _t.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
-                    if (_t.getText().equals(al.name)) {
+                    if (_t.getText().equals(not.o2.toString())) {
                         _t.setText("");
                         _t.setForeground(Color.BLACK);
                     }
@@ -139,12 +142,19 @@ public class AlunoChange extends Page {
                 public void focusLost(FocusEvent e) {
                     if (_t.getText().isEmpty()) {
                         _t.setForeground(Color.GRAY);
-                        _t.setText(al.name);
+                        _t.setText(not.o2.toString());
                     }
                 }
             });
             MyInterface _a = (Object str, int index) -> { this.al.notas.get(index).o2 = Float.parseFloat(str.toString()); };
             _t.getDocument().addDocumentListener(new TextLis(_a,i));
+            final int a = i;
+            Button delete = new Button(() -> {
+                _scrn.alunos.get(index).notas.remove(a);
+                this.re();
+            });
+            delete.setText("Delete");
+            pp.add(delete);
             pp.add(_t);
             Infos.add(pp);
         }
@@ -156,7 +166,12 @@ public class AlunoChange extends Page {
         Infos.add(btn);
         Infos.repaint();
         Infos.revalidate();
-        textinhoLa.setText("Media geral: " + this.getAvg(al.notas));
+
+        float avg = this.getAvg(al.notas);
+        textinhoLa.setText("Media geral: " + avg + "              " + (avg < 5 ? "Reprovado" : "Aprovado"));
+        footer.re();
+        footer.Reload();
+        footer.max = this.al.notas.size() / PorPage;
         // textinhoLa.repaint();
         // textinhoLa.revalidate();
     }
