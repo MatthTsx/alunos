@@ -80,7 +80,7 @@ public class AddGrade extends Page {
     public void Add(){
         Grade g = new Grade();
         Boolean cont = true;
-        if(vv.toString() == null) return;
+        if(vv == null) return;
         for (Grade gs : _scrn.grades) {
             if(gs.codigo == vv.toString()) cont = false; break;
         }

@@ -25,7 +25,7 @@ public class Aluno {
         else if(i == 2){
             Boolean has = false;
             for (Grade pair : scrn.grades) {
-                if(pair.codigo == value.toString()) {
+                if(pair.codigo.equals(value.toString())) {
                     has = true;
                     pair.alunos.add(this);
                     this.g = pair;
